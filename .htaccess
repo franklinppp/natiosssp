@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP_HOST} ^www\.nationsporn\.com [NC]
+    RewriteRule (.*) https://nationsporn.com/$1 [L,R=301]
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+    #php_value upload_max_filesize 3000M
+    #php_value post_max_size 3000M
+</IfModule>
+
+# Protect .env
+<Files .env>
+  Order Allow,Deny
+  Deny from all
+</Files>
